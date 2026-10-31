@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audio Audibility Research Test</title>
+    <link rel="stylesheet" href="/audio/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="top-links"><a href="/">← Visual-field controller</a><a href="/history/">Participant history</a></div>
+      <p class="eyebrow">AUDIO STUDY</p>
+      <h1>Audibility response test</h1>
+      <p class="warning">Experimental research prototype; not a calibrated audiometer or validated hearing assessment. Results depend heavily on headphones, speakers, volume, browser, and ambient noise.</p>
+    </header>
+    <main>
+      <section class="participant-bar"><div><span>Participant</span><strong id="audioParticipant">Not provided</strong></div><a href="/">Edit details</a></section>
+      <section class="card safety"><strong>Before starting</strong><p>Use a quiet room. Set device volume low and comfortable. Do not increase volume to force detection of extreme frequencies. Stop immediately if sound is uncomfortable.</p></section>
+      <section class="card test-card">
+        <div class="metrics">
+          <div><span>STATE</span><b id="state">IDLE</b></div><div><span>PROGRESS</span><b id="progress">0 / —</b></div>
+          <div><span>RESPONSES</span><b id="responses">0</b></div><div><span>FALSE POSITIVES</span><b id="falsePositives">0</b></div>
+        </div>
+        <div class="progress"><div id="progressBar"></div></div>
+        <div class="controls"><button id="start" class="primary">Start audio test</button><button id="pause" disabled>Pause</button><button id="resume" disabled>Resume</button><button id="stop" disabled>Stop</button><button id="reset">Reset</button></div>
+        <div class="space"><kbd>Space</kbd><span>Press once when you hear a beep</span><b id="ack">READY</b></div>
+        <p id="instruction">Starting enables browser audio. Some frequencies may be inaudible because of playback hardware limitations.</p>
+      </section>
+      <details class="card settings">
+        <summary>Timing and playback settings</summary>
+        <div>
+          <label>Tone duration (ms)<input id="durationMs" type="number"></label>
+          <label>Response window (ms)<input id="responseWindowMs" type="number"></label>
+          <label>Output gain<input id="gain" type="number"></label>
+          <label>Frequency points<input id="frequencyCount" type="number"></label>
+          <label>Silent catch trials<input id="catchCount" type="number"></label>
+        </div>
+        <p>Output gain is an uncalibrated digital amplitude—not dB HL or sound-pressure level.</p>
+      </details>
+      <section class="results-head"><div><p class="section-label">Results</p><h2>Audibility and response analysis</h2></div><div><button id="pdf" disabled>Audio PDF</button><button id="combinedPdf" disabled>Combined PDF</button><button id="json" disabled>Export JSON</button><button id="csv" disabled>Export CSV</button></div></section>
+      <section class="card results">
+        <canvas id="chart" width="1000" height="420"></canvas>
+        <div class="summary-grid">
+          <div><span>OBSERVED RANGE</span><b id="range">—</b></div><div><span>MISSED FREQUENCIES</span><b id="missed">—</b></div>
+          <div><span>CATCH-TRIAL RATE</span><b id="fpRate">—</b></div><div><span>STRAY KEY PRESSES</span><b id="strays">0</b></div>
+        </div>
+        <div class="audio-detection">
+          <table class="response-matrix" aria-label="Audio signal detection matrix">
+            <thead><tr><th></th><th>Tone present</th><th>Tone absent</th></tr></thead>
+            <tbody><tr><th>Responded</th><td class="positive">Hit<strong id="audioHits">0</strong></td><td class="negative">False alarm<strong id="audioFalseAlarms">0</strong></td></tr><tr><th>No response</th><td class="negative">Miss<strong id="audioMisses">0</strong></td><td class="positive">Correct rejection<strong id="audioCorrectRejections">0</strong></td></tr></tbody>
+          </table>
+          <div class="detection-metrics"><div><span>Hit rate</span><strong id="audioHitRate">—</strong></div><div><span>False-alarm rate</span><strong id="audioFalseAlarmRate">—</strong></div><div><span>d-prime</span><strong id="audioDPrime">—</strong></div><div><span>Response bias</span><strong id="audioBias">—</strong></div></div>
+        </div>
+        <details class="formula-panel" open><summary>Definitions and formula values</summary><div id="audioDefinitions" class="definition-list"></div><div id="audioFormulaLines" class="formula-lines"></div><p class="formula-note">Hc and FAc use a 0.5 log-linear correction so rates of exactly 0 or 1 do not produce infinite z-scores. Higher d-prime indicates better tone/catch separation. Positive bias is more conservative; negative bias is more liberal.</p></details>
+      </section>
+      <section class="card report-reference" aria-labelledby="audioReportReferenceTitle">
+        <div><p class="section-label">REPORT GUIDE</p><h2 id="audioReportReferenceTitle">Reference and interpretation</h2><p>Definitions, protocol, chart scale, reliability, safety, and limitations used in the on-screen result and downloaded PDF.</p></div>
+        <div id="audioReportReference" class="report-reference-grid"></div>
+      </section>
+    </main>
+    <script type="module" src="/audio/audio.ts"></script>
+  </body>
+</html>

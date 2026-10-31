@@ -1,0 +1,26 @@
+{
+  "name": "cardboard-visual-field-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server/server.ts",
+    "build": "tsc --noEmit && vite build",
+    "start": "tsx server/server.ts",
+    "cert": "bash scripts/create-local-cert.sh",
+    "cert:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/create-local-cert.ps1"
+  },
+  "dependencies": {
+    "jspdf": "4.2.1",
+    "sql.js": "1.14.2",
+    "vite": "^7.1.3",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/sql.js": "1.4.11",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

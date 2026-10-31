@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Participant History</title>
+    <link rel="stylesheet" href="/history/style.css">
+  </head>
+  <body>
+    <header>
+      <div><p class="eyebrow">RESEARCH RECORDS</p><h1>Participant history</h1><p>Review locally saved visual and audio sessions and download their reports.</p></div>
+      <a href="/">← Testing console</a>
+    </header>
+    <main>
+      <section class="privacy">This page contains identifiable research data stored on this computer. Only authorized study staff should access it.</section>
+      <section class="history-layout">
+        <aside class="card">
+          <label for="search">Search participants</label>
+          <input id="search" type="search" placeholder="Name or participant ID" autocomplete="off">
+          <div id="participantCount" class="count">Loading…</div>
+          <div id="participantList" class="participant-list"></div>
+        </aside>
+        <section class="card detail">
+          <div id="emptyState" class="empty"><h2>Select a participant</h2><p>The participant's saved sessions will appear here.</p></div>
+          <div id="participantDetail" hidden>
+            <div class="detail-head"><div><p class="eyebrow">PARTICIPANT</p><h2 id="detailName"></h2><p id="detailMeta"></p></div><button id="combinedPdf" disabled>Combined PDF</button></div>
+            <p id="detailNotes" class="notes"></p>
+            <div id="sessionList" class="session-list"></div>
+          </div>
+        </section>
+      </section>
+      <p id="status" class="status" role="status"></p>
+    </main>
+    <script type="module" src="/history/history.ts"></script>
+  </body>
+</html>

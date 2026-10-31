@@ -1,0 +1,10 @@
+node_modules/
+dist/
+certs/*.pem
+certs/*.pfx
+certs/*.cer
+*.log
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

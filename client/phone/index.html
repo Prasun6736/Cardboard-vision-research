@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <title>Visual Field Phone Display</title>
+    <link rel="stylesheet" href="/phone/style.css" />
+  </head>
+  <body>
+    <canvas id="stereoCanvas"></canvas>
+    <canvas id="xrCanvas"></canvas>
+    <div class="divider"></div>
+    <aside id="overlay">
+      <p class="eyebrow">PHONE STIMULUS DISPLAY</p>
+      <h1>Ready for Cardboard</h1>
+      <p id="status">Connecting to the controller…</p>
+      <button id="enterDisplay">Enter fullscreen / WebXR</button>
+      <small id="capability">Checking display capabilities…</small>
+      <p class="warning">Research prototype only. Not clinically validated.</p>
+    </aside>
+    <div id="eyeBadge">IDLE</div>
+    <script type="module" src="/phone/phone.ts"></script>
+  </body>
+</html>

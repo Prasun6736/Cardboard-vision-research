@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Field Research Controller</title>
+    <link rel="stylesheet" href="/desktop/style.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">VISUAL FIELD STUDY</p>
+        <h1>Research testing console</h1>
+        <p class="warning">Experimental research prototype. Not instrument validated. Do not use for diagnosis or treatment decisions.</p>
+      </div>
+      <div class="header-actions"><a href="/history/">Participant history</a><div class="connection"><span id="connectionDot"></span><strong id="connectionText">Connecting…</strong></div></div>
+    </header>
+
+    <main>
+      <section id="intake" class="card intake-card">
+        <div class="intake-intro">
+          <span class="step-label">Step 1 of 2</span>
+          <h2>Participant details</h2>
+          <p>Enter participant information before beginning. Test sessions are saved to the local research database and included in exports.</p>
+        </div>
+        <form id="participantForm">
+          <div class="intake-grid">
+            <label>Participant ID<input id="participantId" name="participantId" autocomplete="off" required></label>
+            <label>Full name<input id="participantName" name="name" autocomplete="name" maxlength="100" required></label>
+            <label>Age<input id="participantAge" name="age" type="number" required></label>
+            <label>Gender<select id="participantGender" name="gender" required><option value="">Select</option><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+            <label class="notes-field">Notes (optional)<textarea id="participantNotes" name="notes" rows="3" placeholder="Study code, correction used, or relevant session note"></textarea></label>
+          </div>
+          <div class="form-footer"><p>This prototype stores identifiable information in a local SQLite database. Handle and retain it according to your study protocol.</p><button type="submit" class="primary">Continue to test setup</button></div>
+        </form>
+      </section>
+
+      <div id="testWorkspace" class="workspace hidden">
+      <section class="participant-strip">
+        <div><span>Participant</span><strong id="participantSummary">—</strong></div>
+        <button id="editParticipant" type="button">Edit details</button>
+      </section>
+      <section class="card session-card">
+        <div class="session-status">
+          <div><span>STATE</span><strong id="state">IDLE</strong></div>
+          <div><span>CURRENT EYE</span><strong id="eye">—</strong></div>
+          <div><span>PROGRESS</span><strong id="progress">0 / 0</strong></div>
+        </div>
+        <div class="progress-track"><div id="progressBar"></div></div>
+        <div class="controls">
+          <button id="start" class="primary">Start left-eye test</button>
+          <button id="startRight" class="primary" disabled>Start right-eye test</button>
+          <button id="pause" disabled>Pause</button>
+          <button id="resume" disabled>Resume</button>
+          <button id="stop" class="danger" disabled>Stop</button>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="response-box"><kbd>Space</kbd><span>Press once when the patient reports seeing a stimulus</span><b id="responsePulse">READY</b></div>
+        <p id="statusMessage" class="status-message">Connect the phone, place it in the headset, and use its Enter Display button.</p>
+      </section>
+
+      <section class="card phone-card">
+        <div>
+          <p class="eyebrow">PHONE CLIENT</p>
+          <h2 id="phoneUrl">Open /phone/ on this computer’s LAN address</h2>
+          <p>The server terminal prints the exact phone URL. Both devices must use the same Wi-Fi network.</p>
+        </div>
+        <a href="/phone/" target="_blank">Preview phone display ↗</a>
+      </section>
+
+      <section class="card phone-card">
+        <div>
+          <p class="eyebrow">ADDITIONAL PROTOTYPE</p>
+          <h2>Audio audibility-response test</h2>
+          <p>Randomized 20 Hz–20 kHz tones, silent catch trials, missed-frequency reporting, and exports.</p>
+        </div>
+        <a href="/audio/">Open audio test →</a>
+      </section>
+
+      <details class="card settings-card">
+        <summary><span><strong>Calibration & timing</strong><small>Prototype geometry only — not luminance calibrated</small></span></summary>
+        <div class="settings-grid">
+          <label>Stimulus duration (ms)<input id="stimulusDurationMs" type="number"></label>
+          <label>Response window (ms)<input id="responseWindowMs" type="number"></label>
+          <label>Horizontal FOV (°)<input id="horizontalFovDeg" type="number"></label>
+          <label>Vertical FOV (°)<input id="verticalFovDeg" type="number"></label>
+          <label>Screen width (px)<input id="screenWidth" type="number"></label>
+          <label>Screen height (px)<input id="screenHeight" type="number"></label>
+          <label>Pixel ratio<input id="pixelRatio" type="number"></label>
+          <label>Stimulus diameter (°)<input id="stimulusDiameterDeg" type="number"></label>
+          <label>Background intensity<input id="backgroundIntensity" type="number"></label>
+          <label>Maximum intensity<input id="maximumStimulusIntensity" type="number"></label>
+        </div>
+        <p class="calibration-note">RGB values are not calibrated luminance. Accurate calibration requires measuring the display and headset optical output.</p>
+      </details>
+
+      <section class="results-section">
+        <div class="results-title"><div><p class="eyebrow">SESSION OUTPUT</p><h2>Field maps and response analysis</h2></div><div><button id="exportPdf" disabled>Visual PDF</button><button id="exportCombined" disabled>Combined PDF</button><button id="exportJson" disabled>Export JSON</button><button id="exportCsv" disabled>Export CSV</button></div></div>
+        <div class="maps">
+          <article class="card"><h3>LEFT EYE</h3><div id="leftMap" class="field-map"><span>No results yet</span></div></article>
+          <article class="card"><h3>RIGHT EYE</h3><div id="rightMap" class="field-map"><span>No results yet</span></div></article>
+        </div>
+        <article class="card map-reference" aria-labelledby="mapReferenceTitle">
+          <div><p class="eyebrow">HOW TO READ THE MAP</p><h3 id="mapReferenceTitle">Field-map reference</h3></div>
+          <div class="score-legend"><div><span><b>0</b> Not seen</span><span><b>100</b> Seen</span></div><i aria-hidden="true"></i><div class="score-ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div><small>25, 50, and 75 describe interpolated shading between measured points.</small></div>
+          <div id="fieldMapReference" class="map-reference-grid"></div>
+        </article>
+        <div class="detection-grid">
+          <article class="card"><h3>LEFT EYE · SIGNAL DETECTION</h3><div id="leftDetection" class="detection-summary"><span>Complete trials to calculate</span></div></article>
+          <article class="card"><h3>RIGHT EYE · SIGNAL DETECTION</h3><div id="rightDetection" class="detection-summary"><span>Complete trials to calculate</span></div></article>
+        </div>
+        <article class="card report-reference" aria-labelledby="visualReportReferenceTitle">
+          <div><p class="eyebrow">REPORT GUIDE</p><h3 id="visualReportReferenceTitle">Reference and interpretation</h3><p>Definitions, protocol, scale, reliability, and limitations used in the on-screen result and downloaded PDF.</p></div>
+          <div id="visualReportReference" class="report-reference-grid"></div>
+        </article>
+      </section>
+
+      <section class="card log-card"><div><h3>Timing & protocol log</h3><button id="clearLog">Clear</button></div><pre id="log"></pre></section>
+      </div>
+    </main>
+    <script type="module" src="/desktop/desktop.ts"></script>
+  </body>
+</html>
